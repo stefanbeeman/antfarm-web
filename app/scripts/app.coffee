@@ -13,13 +13,15 @@ window.Antfarm =
         return window.innerHeight
 
     renderWorld: ->
-        h = @world.Grid.Cells.length
-        w = @world.Grid.Cells[0].length
+        h = @world.Cells.length
+        w = @world.Cells[0].length
         for y in [0...h]
             for x in [0...w]
-                cell = @world.Grid.Cells[y][x]
+                cell = @world.Cells[y][x]
                 cell = cell.Data
                 @renderCell(x, y, cell)
+        for unit in @world.Units
+            @renderUnit(unit)
 
     renderCell: (x, y, cell) ->
         material = @world.Materials[cell.material]
@@ -30,6 +32,12 @@ window.Antfarm =
             c += "Floor"
         c += 0
         Crafty.e("Gridded, " + c).at(x, y)
+
+    renderUnit: (unit) ->
+        c = "SprWorm"
+        x = unit.Position.X
+        y = unit.Position.Y
+        Crafty.e("Unit, " + c).at(x, y)
 
     start: ->
         Crafty.init(@width(), @height())

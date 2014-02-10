@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
@@ -27,7 +28,14 @@ func init() {
 	flag.IntVar(&port, "p", 8080, "port")
 	flag.StringVar(&topStaticDir, "static_dir", "", "static directory in addition to default static directory")
 	// world
-	myWorld = antfarm.MakeWorld("../antfarm-data", 12, 12)
+	myWorld = antfarm.MakeWorld("../antfarm-data", 10, 10, 2)
+	ticker := time.NewTicker(time.Millisecond * 100)
+	go func() {
+		for t := range ticker.C {
+			fmt.Println("Tick at", t)
+			myWorld.Step()
+		}
+	}()
 }
 
 func appendStaticRoute(sr StaticRoutes, dir string) StaticRoutes {
@@ -55,11 +63,6 @@ type disabledDirListing struct {
 
 func (f disabledDirListing) Readdir(count int) ([]os.FileInfo, error) {
 	return nil, nil
-}
-
-type Profile struct {
-	Name    string
-	Hobbies []string
 }
 
 func getWorld(w http.ResponseWriter, r *http.Request) {

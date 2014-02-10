@@ -17,3 +17,10 @@ Crafty.c 'Gridded',
                 y: y * Antfarm.grid.tileHeight
             )
             return this
+
+Crafty.c 'Unit',
+    init: ->
+        @requires('Gridded')
+        @attr(
+            z: 10
+        )

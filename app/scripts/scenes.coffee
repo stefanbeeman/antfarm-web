@@ -9,6 +9,9 @@ Crafty.scene 'Loading', ->
         material: (done) ->
             Antfarm.loadSprites "material", ->
                 done(null, true)
+        unit: (done) ->
+            Antfarm.loadSprites "unit", ->
+                done(null, true)
         world: (done) ->
             $.get '/world', (world) ->
                 Antfarm.world = world
