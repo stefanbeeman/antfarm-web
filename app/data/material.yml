@@ -1,0 +1,80 @@
+-
+    name: "Rock"
+    rune: "."
+    structure: 10
+    armor: 16
+-
+    name: "Dirt"
+    rune: "~"
+    structure: 4
+    armor: 6
+-
+    name: "Sand"
+    rune: ":"
+    structure: 4
+    armor: 6
+-
+    name: "Stone"
+    rune: "+"
+    structure: 12
+    armor: 20
+-
+    name: "Sandstone"
+    rune: "+"
+    structure: 12
+    armor: 20
+-
+    name: "Marble"
+    rune: "+"
+    structure: 12
+    armor: 20
+-
+    name: "Obsidian"
+    rune: "+"
+    structure: 12
+    armor: 20
+-
+    name: "OreCopper"
+    rune: "C"
+    structure: 10
+    armor: 16
+-
+    name: "OreIron"
+    rune: "I"
+    structure: 10
+    armor: 16
+-
+    name: "OreSilver"
+    rune: "S"
+    structure: 10
+    armor: 16
+-
+    name: "OreGold"
+    rune: "G"
+    structure: 10
+    armor: 16
+-
+    name: "OreOrichalcum"
+    rune: "O"
+    structure: 10
+    armor: 16
+-
+    name: "Ice"
+    rune: "❄"
+    structure: 8
+    armor: 12
+-
+    name: "Flesh"
+    rune: "&"
+    structure: 6
+    armor: 8
+-
+    name: "Crystal"
+    rune: "*"
+    structure: 12
+    armor: 20
+-
+    name: "Bone"
+    rune: "%"
+    structure: 8
+    armor: 12
