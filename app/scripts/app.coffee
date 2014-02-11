@@ -20,8 +20,8 @@ window.Antfarm =
                 cell = @world.Cells[y][x]
                 cell = cell.Data
                 @renderCell(x, y, cell)
-        for unit in @world.Units
-            @renderUnit(unit)
+        for actor in @world.Actors
+            @renderActor(actor)
 
     renderCell: (x, y, cell) ->
         material = @world.Materials[cell.material]
@@ -33,10 +33,10 @@ window.Antfarm =
         c += 0
         Crafty.e("Gridded, " + c).at(x, y)
 
-    renderUnit: (unit) ->
+    renderActor: (actor) ->
         c = "SprWorm"
-        x = unit.Position.X
-        y = unit.Position.Y
+        x = actor.Location.X
+        y = actor.Location.Y
         Crafty.e("Unit, " + c).at(x, y)
 
     start: ->
