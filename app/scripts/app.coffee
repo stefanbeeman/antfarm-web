@@ -34,9 +34,9 @@ window.Antfarm =
         Crafty.e("Gridded, " + c).at(x, y)
 
     renderActor: (actor) ->
-        c = "SprWorm"
-        x = actor.Location.X
-        y = actor.Location.Y
+        c = "Spr" + actor.Species
+        x = actor.Position.X
+        y = actor.Position.Y
         Crafty.e("Unit, " + c).at(x, y)
 
     start: ->
@@ -57,5 +57,15 @@ window.Antfarm =
             Crafty.sprite(32, '/gfx/tiles/' + filename + '.png', results.data)
             fn()
         )
+
+    update: ->
+        $.get '/world', (world) ->
+            console.log "Update"
+            Antfarm.world = world
+            Crafty.scene("sim")
+
+
+    gameLoop: ->
+        setInterval(Antfarm.update, 100)
 
 Antfarm.start()

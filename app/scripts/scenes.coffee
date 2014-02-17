@@ -13,13 +13,12 @@ Crafty.scene 'Loading', ->
             Antfarm.loadSprites "unit", ->
                 done(null, true)
         world: (done) ->
-            $.get '/world', (world) ->
-                Antfarm.world = world
+
                 done(null, true)
     , (error, result) ->
-        Crafty.scene("Sim")
+        Antfarm.gameLoop()
     )
 
-Crafty.scene "Sim", ->
+Crafty.scene "sim", ->
     Crafty.background("black")
     Antfarm.renderWorld()
