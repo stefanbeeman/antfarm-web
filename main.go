@@ -14,7 +14,7 @@ var (
 	hostname     string
 	port         int
 	topStaticDir string
-	world        antfarm.World
+	world        af.World
 )
 
 func init() {
@@ -27,7 +27,7 @@ func init() {
 	flag.IntVar(&port, "p", 8080, "port")
 	flag.StringVar(&topStaticDir, "static_dir", "", "static directory in addition to default static directory")
 	// world
-	world = antfarm.MakeWorld("../antfarm-data", 20, 20, 1)
+	world = af.MakeWorld("../antfarm-data", 20, 20, 1)
 }
 
 func appendStaticRoute(sr StaticRoutes, dir string) StaticRoutes {
