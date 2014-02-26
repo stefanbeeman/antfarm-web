@@ -18,15 +18,13 @@ window.Antfarm =
         for y in [0...h]
             for x in [0...w]
                 cell = @world.Cells[y][x]
-                cell = cell.Data
                 @renderCell(x, y, cell)
         for actor in @world.Actors
             @renderActor(actor)
 
     renderCell: (x, y, cell) ->
-        material = @world.Materials[cell.material]
-        c = "Spr" + material.Name
-        if cell.solid
+        c = "Spr" + cell.Material.Name.titleize()
+        if cell.Solid
             c += "Wall"
         else
             c += "Floor"
@@ -66,6 +64,6 @@ window.Antfarm =
 
 
     gameLoop: ->
-        setInterval(Antfarm.update, 100)
+        setInterval(Antfarm.update, 1000)
 
 Antfarm.start()
