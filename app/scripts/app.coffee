@@ -1,6 +1,6 @@
 window.Antfarm =
 
-    world: null
+    game: null
 
     grid:
         tileWidth: 32
@@ -13,13 +13,13 @@ window.Antfarm =
         return window.innerHeight
 
     renderWorld: ->
-        h = @world.Cells.length
-        w = @world.Cells[0].length
+        h = @game.World.Grid.Cells.length
+        w = @game.World.Grid.Cells[0].length
         for y in [0...h]
             for x in [0...w]
-                cell = @world.Cells[y][x]
+                cell = @game.World.Grid.Cells[y][x]
                 @renderCell(x, y, cell)
-        for actor in @world.Actors
+        for actor in @game.Actors
             @renderActor(actor)
 
     renderCell: (x, y, cell) ->
@@ -32,7 +32,7 @@ window.Antfarm =
         Crafty.e("Gridded, " + c).at(x, y)
 
     renderActor: (actor) ->
-        c = "Spr" + actor.Species
+        c = "SprWorm"
         x = actor.Position.X
         y = actor.Position.Y
         Crafty.e("Unit, " + c).at(x, y)
@@ -58,9 +58,9 @@ window.Antfarm =
 
     gameLoop: ->
         socket = io.connect("http://localhost/")
-        socket.on 'world', (world) ->
+        socket.on 'game', (game) ->
             console.log("tic")
-            Antfarm.world = world
+            Antfarm.game = game
             Crafty.scene("sim")
         socket.on 'disconnect', ->
             console.log "You have been disconnected"

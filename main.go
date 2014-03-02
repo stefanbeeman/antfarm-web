@@ -15,7 +15,7 @@ var (
 	hostname     string
 	port         int
 	topStaticDir string
-	world        af.World
+	game         af.Game
 )
 
 func init() {
@@ -27,8 +27,7 @@ func init() {
 	flag.StringVar(&hostname, "h", "localhost", "hostname")
 	flag.IntVar(&port, "p", 8080, "port")
 	flag.StringVar(&topStaticDir, "static_dir", "", "static directory in addition to default static directory")
-	// world
-	world = af.MakeWorld("../antfarm-data", 20, 20, 0)
+	game = af.MakeGame("../antfarm-data", 20, 20, 0)
 }
 
 func appendStaticRoute(sr StaticRoutes, dir string) StaticRoutes {
@@ -60,7 +59,7 @@ func (f disabledDirListing) Readdir(count int) ([]os.FileInfo, error) {
 
 func onConnect(ns *socketio.NameSpace) {
 	fmt.Println("connected:", ns.Id())
-	ns.Emit("world", world)
+	ns.Emit("game", game)
 }
 
 func onDisconnect(ns *socketio.NameSpace) {
@@ -104,8 +103,8 @@ func main() {
 	ticker := time.NewTicker(time.Millisecond * 1000)
 	go func() {
 		for t := range ticker.C {
-			world.RunFor(1)
-			sio.Broadcast("world", world, t)
+			game.RunFor(1)
+			sio.Broadcast("game", game, t)
 		}
 	}()
 
