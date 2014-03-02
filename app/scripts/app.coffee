@@ -56,14 +56,13 @@ window.Antfarm =
             fn()
         )
 
-    update: ->
-        $.get '/world', (world) ->
-            console.log "Update"
+    gameLoop: ->
+        socket = io.connect("http://localhost/")
+        socket.on 'world', (world) ->
+            console.log("tic")
             Antfarm.world = world
             Crafty.scene("sim")
-
-
-    gameLoop: ->
-        setInterval(Antfarm.update, 1000)
+        socket.on 'disconnect', ->
+            console.log "You have been disconnected"
 
 Antfarm.start()
