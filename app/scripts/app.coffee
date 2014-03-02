@@ -32,9 +32,10 @@ window.Antfarm =
         Crafty.e("Gridded, " + c).at(x, y)
 
     renderActor: (actor) ->
+        console.log(actor)
         c = "SprWorm"
-        x = actor.Position.X
-        y = actor.Position.Y
+        x = actor.Location.X
+        y = actor.Location.Y
         Crafty.e("Unit, " + c).at(x, y)
 
     start: ->

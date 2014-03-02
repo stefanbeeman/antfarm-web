@@ -27,7 +27,7 @@ func init() {
 	flag.StringVar(&hostname, "h", "localhost", "hostname")
 	flag.IntVar(&port, "p", 8080, "port")
 	flag.StringVar(&topStaticDir, "static_dir", "", "static directory in addition to default static directory")
-	game = af.MakeGame("../antfarm-data", 20, 20, 0)
+	game = af.MakeGame("../antfarm-data", 20, 20, 1)
 }
 
 func appendStaticRoute(sr StaticRoutes, dir string) StaticRoutes {
@@ -100,7 +100,7 @@ func main() {
 	// Handler for new connections, also adds socket.io event handlers
 	sio.On("connect", onConnect)
 	sio.On("disconnect", onDisconnect)
-	ticker := time.NewTicker(time.Millisecond * 1000)
+	ticker := time.NewTicker(time.Millisecond * 100)
 	go func() {
 		for t := range ticker.C {
 			game.RunFor(1)

@@ -9,7 +9,7 @@ Crafty.c 'Gridded',
         unless x? && y?
             return {
                 x: this.x/Antfarm.grid.tileWidth
-                y: this.y/Antfarm.gird.tileHeight
+                y: this.y/Antfarm.grid.tileHeight
             }
         else
             @attr(
