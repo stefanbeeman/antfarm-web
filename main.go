@@ -15,7 +15,7 @@ var (
 	hostname     string
 	port         int
 	topStaticDir string
-	game         af.Game
+	game         antfarm.Game
 )
 
 func init() {
@@ -27,7 +27,7 @@ func init() {
 	flag.StringVar(&hostname, "h", "localhost", "hostname")
 	flag.IntVar(&port, "p", 8080, "port")
 	flag.StringVar(&topStaticDir, "static_dir", "", "static directory in addition to default static directory")
-	game = af.MakeGame("../antfarm-data", 20, 20, 1)
+	game = antfarm.MakeGame("../antfarm-data", 20, 20, 1)
 }
 
 func appendStaticRoute(sr StaticRoutes, dir string) StaticRoutes {
@@ -59,7 +59,7 @@ func (f disabledDirListing) Readdir(count int) ([]os.FileInfo, error) {
 
 func onConnect(ns *socketio.NameSpace) {
 	fmt.Println("connected:", ns.Id())
-	ns.Emit("game", game)
+	ns.Emit("game", game.Display())
 }
 
 func onDisconnect(ns *socketio.NameSpace) {
@@ -81,30 +81,20 @@ func main() {
 	}
 	staticRoutes = appendStaticRoute(staticRoutes, staticDir)
 
-	// Handle routes
-	// http.Handle("/", http.FileServer(staticRoutes))
-
-	// Listen on hostname:port
-	// fmt.Printf("Listening on %s:%d...\n", hostname, port)
-	// err := http.ListenAndServe(fmt.Sprintf("%s:%d", hostname, port), nil)
-	// if err != nil {
-	//	log.Fatal("Error: ", err)
-	// }
-
 	sock_config := &socketio.Config{}
 	sock_config.HeartbeatTimeout = 2
 	sock_config.ClosingTimeout = 4
 
 	sio := socketio.NewSocketIOServer(sock_config)
 
-	// Handler for new connections, also adds socket.io event handlers
 	sio.On("connect", onConnect)
 	sio.On("disconnect", onDisconnect)
+
 	ticker := time.NewTicker(time.Millisecond * 100)
 	go func() {
 		for t := range ticker.C {
 			game.RunFor(1)
-			sio.Broadcast("game", game, t)
+			sio.Broadcast("game", game.Display(), t)
 		}
 	}()
 

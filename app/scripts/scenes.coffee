@@ -12,10 +12,8 @@ Crafty.scene 'Loading', ->
         unit: (done) ->
             Antfarm.loadSprites "unit", ->
                 done(null, true)
-        world: (done) ->
-
-                done(null, true)
     , (error, result) ->
+        console.log(error)
         Antfarm.gameLoop()
     )
 

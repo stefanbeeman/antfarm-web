@@ -13,17 +13,17 @@ window.Antfarm =
         return window.innerHeight
 
     renderWorld: ->
-        h = @game.World.Grid.Cells.length
-        w = @game.World.Grid.Cells[0].length
+        h = @game.World.Cells.length
+        w = @game.World.Cells[0].length
         for y in [0...h]
             for x in [0...w]
-                cell = @game.World.Grid.Cells[y][x]
+                cell = @game.World.Cells[y][x]
                 @renderCell(x, y, cell)
         for actor in @game.Actors
             @renderActor(actor)
 
     renderCell: (x, y, cell) ->
-        c = "Spr" + cell.Material.Name.titleize()
+        c = "Spr" + cell.Material.titleize()
         if cell.Solid
             c += "Wall"
         else
@@ -33,9 +33,9 @@ window.Antfarm =
 
     renderActor: (actor) ->
         console.log(actor)
-        c = "SprWorm"
-        x = actor.Location.X
-        y = actor.Location.Y
+        c = "Spr" + actor.Tile
+        x = actor.X
+        y = actor.Y
         Crafty.e("Unit, " + c).at(x, y)
 
     start: ->
@@ -58,9 +58,15 @@ window.Antfarm =
         )
 
     gameLoop: ->
-        socket = io.connect("http://localhost/")
+        socket = io.connect("http://localhost:9000")
+        socket.on 'connect', ->
+            console.log("connecting")
+            socket.emit('ping')
+        socket.on 'pong', ->
+            console.log("pong")
         socket.on 'game', (game) ->
             console.log("tic")
+            console.log(game)
             Antfarm.game = game
             Crafty.scene("sim")
         socket.on 'disconnect', ->
